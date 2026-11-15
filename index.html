@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Programming for Data Science | Comprehensive Exam</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Header Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">R</div>
+                <div>
+                    <h1>R Data Science</h1>
+                    <span>Practice Exam Portal</span>
+                </div>
+            </div>
+
+            <div class="exam-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Questions</span>
+                    <span class="stat-value">30</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Answered</span>
+                    <span class="stat-value" id="answered-count">0 / 30</span>
+                </div>
+            </div>
+
+            <nav class="section-nav">
+                <button type="button" class="nav-btn active" data-target="sec-1" onclick="switchSection('sec-1')">
+                    <span class="nav-num">01</span>
+                    <div class="nav-info">
+                        <strong>MCQs & Theory</strong>
+                        <small>Questions 1 – 10</small>
+                    </div>
+                </button>
+                <button type="button" class="nav-btn" data-target="sec-2" onclick="switchSection('sec-2')">
+                    <span class="nav-num">02</span>
+                    <div class="nav-info">
+                        <strong>Code to Output</strong>
+                        <small>Questions 11 – 20</small>
+                    </div>
+                </button>
+                <button type="button" class="nav-btn" data-target="sec-3" onclick="switchSection('sec-3')">
+                    <span class="nav-num">03</span>
+                    <div class="nav-info">
+                        <strong>Applied Data Science</strong>
+                        <small>Questions 21 – 30</small>
+                    </div>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button type="button" id="submit-btn" class="btn-primary" onclick="submitExam()">Submit & Grade Exam</button>
+                <button type="button" id="reset-btn" class="btn-secondary" onclick="resetExam()">Reset Answers</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div>
+                    <h2 id="section-title">Exercise 1: Multiple Choice Questions (Theory & Fundamentals)</h2>
+                    <p id="section-desc">Select the best answer for each question covering R syntax, data types, and statistical theory.</p>
+                </div>
+                <div id="final-score-badge" class="score-badge hidden">
+                    Score: <span id="score-text">0/30</span>
+                </div>
+            </header>
+
+            <form id="exam-form">
+                <!-- Exercise 1 Container -->
+                <section id="sec-1" class="exam-section active">
+                    <div id="questions-sec-1" class="questions-grid"></div>
+                    <div class="section-pagination">
+                        <span></span>
+                        <button type="button" class="btn-nav" onclick="switchSection('sec-2')">Next: Exercise 2 (Code Output) &rarr;</button>
+                    </div>
+                </section>
+
+                <!-- Exercise 2 Container -->
+                <section id="sec-2" class="exam-section">
+                    <div id="questions-sec-2" class="questions-grid"></div>
+                    <div class="section-pagination">
+                        <button type="button" class="btn-nav" onclick="switchSection('sec-1')">&larr; Previous: Exercise 1</button>
+                        <button type="button" class="btn-nav" onclick="switchSection('sec-3')">Next: Exercise 3 (Applied R) &rarr;</button>
+                    </div>
+                </section>
+
+                <!-- Exercise 3 Container -->
+                <section id="sec-3" class="exam-section">
+                    <div id="questions-sec-3" class="questions-grid"></div>
+                    <div class="section-pagination">
+                        <button type="button" class="btn-nav" onclick="switchSection('sec-2')">&larr; Previous: Exercise 2</button>
+                        <button type="button" class="btn-primary" onclick="submitExam()">Finish & Grade Exam</button>
+                    </div>
+                </section>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        const examData = [
+            // EXERCISE 1: MCQs (Questions 1 - 10)
+            {
+                id: 1, section: 'sec-1',
+                q: "Which operator is considered the standard and preferred assignment operator in R?",
+                code: null,
+                options: ["=", "<-", ":=", "=="],
+                ans: 1,
+                exp: "In R, '<-' is the standard assignment operator used to assign values to variables in the current environment."
+            },
+            {
+                id: 2, section: 'sec-1',
+                q: "What happens when you combine numeric, character, and logical elements inside a single atomic vector using c()?",
+                code: null,
+                options: [
+                    "R throws a type-mismatch error.",
+                    "All elements are coerced into logical values.",
+                    "All elements are coerced into character strings.",
+                    "R automatically converts the vector into a list."
+                ],
+                ans: 2,
+                exp: "Atomic vectors must be homogeneous. R follows a strict coercion hierarchy: logical -> integer -> numeric -> character."
+            },
+            {
+                id: 3, section: 'sec-1',
+                q: "Which R data structure allows storing elements of different types (e.g., a matrix, a vector, and a string) together?",
+                code: null,
+                options: ["Atomic Vector", "Matrix", "Factor", "List"],
+                ans: 3,
+                exp: "A list is a recursive, heterogeneous data structure capable of holding objects of varying types and lengths."
+            },
+            {
+                id: 4, section: 'sec-1',
+                q: "How are matrices filled by default when created with the matrix() function in R?",
+                code: null,
+                options: ["Row-wise (byrow = TRUE)", "Column-wise (byrow = FALSE)", "Diagonally", "Randomly"],
+                ans: 1,
+                exp: "By default, R fills matrices column-by-column (byrow = FALSE) unless explicitly specified otherwise."
+            },
+            {
+                id: 5, section: 'sec-1',
+                q: "Which function is used to inspect the internal structure, data types, and dimensions of an R object?",
+                code: null,
+                options: ["summary()", "str()", "typeof()", "inspect()"],
+                ans: 1,
+                exp: "str() (structure) displays a compact summary of an object's internal structure, classes, and preview values."
+            },
+            {
+                id: 6, section: 'sec-1',
+                q: "In R, what index does the first element of a vector have?",
+                code: null,
+                options: ["0", "1", "-1", "It depends on the data type"],
+                ans: 1,
+                exp: "Unlike Python or C++, R uses 1-based indexing. The first element is always at index [1]."
+            },
+            {
+                id: 7, section: 'sec-1',
+                q: "Which measure of spread is calculated as Q3 - Q1 and is robust against extreme outliers?",
+                code: null,
+                options: ["Variance", "Standard Deviation", "Range", "Interquartile Range (IQR)"],
+                ans: 3,
+                exp: "The Interquartile Range (IQR = Q3 - Q1) measures the spread of the middle 50% of data and ignores outliers."
+            },
+            {
+                id: 8, section: 'sec-1',
+                q: "When a distribution is heavily skewed to the right (positively skewed), how do the mean and median typically compare?",
+                code: null,
+                options: ["Mean < Median", "Mean = Median", "Mean > Median", "They cannot be compared"],
+                ans: 2,
+                exp: "Extreme high values in a right-skewed distribution pull the mean upward, making Mean > Median."
+            },
+            {
+                id: 9, section: 'sec-1',
+                q: "What is the purpose of a factor in R?",
+                code: null,
+                options: [
+                    "To perform matrix multiplication",
+                    "To store categorical data with predefined levels",
+                    "To handle missing values",
+                    "To optimize floating-point precision"
+                ],
+                ans: 1,
+                exp: "Factors represent categorical variables (nominal or ordinal) stored internally as integers mapped to character levels."
+            },
+            {
+                id: 10, section: 'sec-1',
+                q: "Which R function generates a frequency contingency table for categorical variables?",
+                code: null,
+                options: ["freq()", "table()", "count()", "hist()"],
+                ans: 1,
+                exp: "table() builds contingency tables of counts at each combination of factor or vector levels."
+            },
+
+            // EXERCISE 2: CODE TO OUTPUT (Questions 11 - 20)
+            {
+                id: 11, section: 'sec-2',
+                q: "Determine the exact console output of the following R code:",
+                code: "x <- c(10, 20, 30, 40, 50)\nx[-c(1, 3)]",
+                options: [
+                    "[1] 10 30",
+                    "[1] 20 40 50",
+                    "[1] 20 30 40 50",
+                    "Error: negative subscripts not allowed"
+                ],
+                ans: 1,
+                exp: "Negative indexing in R excludes elements at those positions. Excluding indices 1 (10) and 3 (30) leaves 20, 40, 50."
+            },
+            {
+                id: 12, section: 'sec-2',
+                q: "What will R output due to vector recycling in this arithmetic operation?",
+                code: "a <- c(1, 2, 3, 4)\nb <- c(10, 20)\na + b",
+                options: [
+                    "[1] 11 22 3 4",
+                    "[1] 11 22 13 24",
+                    "Error: non-conformable arrays",
+                    "[1] 11 22 NA NA"
+                ],
+                ans: 1,
+                exp: "R recycles the shorter vector b (10, 20) to match the length of a: (1+10, 2+20, 3+10, 4+20) = 11, 22, 13, 24."
+            },
+            {
+                id: 13, section: 'sec-2',
+                q: "What is the printed output of this matrix creation and subsetting snippet?",
+                code: "m <- matrix(1:6, nrow = 2, ncol = 3)\nm[2, 2]",
+                options: [
+                    "[1] 2",
+                    "[1] 4",
+                    "[1] 5",
+                    "[1] 3"
+                ],
+                ans: 1,
+                exp: "Column-wise filling puts 1,2 in Col 1; 3,4 in Col 2; 5,6 in Col 3. Row 2, Col 2 is 4."
+            },
+            {
+                id: 14, section: 'sec-2',
+                q: "What does the following sequence and logical comparison output?",
+                code: "v <- seq(2, 10, by = 2)\nsum(v > 5)",
+                options: [
+                    "[1] 24",
+                    "[1] 3",
+                    "[1] 6 8 10",
+                    "[1] TRUE"
+                ],
+                ans: 1,
+                exp: "v is c(2, 4, 6, 8, 10). v > 5 produces c(FALSE, FALSE, TRUE, TRUE, TRUE). sum() treats TRUE as 1, returning 3."
+            },
+            {
+                id: 15, section: 'sec-2',
+                q: "What is the result of running this code containing a missing value (NA)?",
+                code: "scores <- c(85, 90, NA, 95)\nmean(scores, na.rm = TRUE)",
+                options: [
+                    "[1] NA",
+                    "[1] 90",
+                    "[1] 67.5",
+                    "Error in mean.default(scores)"
+                ],
+                ans: 1,
+                exp: "With na.rm = TRUE, R removes NA before computing the mean: (85 + 90 + 95) / 3 = 90."
+            },
+            {
+                id: 16, section: 'sec-2',
+                q: "Identify the output of this list indexing operation:",
+                code: "my_list <- list(id = 101, scores = c(88, 92, 79))\nmy_list[[2]][3]",
+                options: [
+                    "[1] 101",
+                    "[1] 79",
+                    "[1] 92",
+                    "$scores [1] 79"
+                ],
+                ans: 1,
+                exp: "my_list[[2]] extracts the vector c(88, 92, 79), and [3] accesses its 3rd element, which is 79."
+            },
+            {
+                id: 17, section: 'sec-2',
+                q: "What is the output of the modulo and integer division operators below?",
+                code: "17 %% 5 + 17 %/% 5",
+                options: [
+                    "[1] 5",
+                    "[1] 5.4",
+                    "[1] 7",
+                    "[1] 6"
+                ],
+                ans: 0,
+                exp: "17 %% 5 gives the remainder (2), and 17 %/% 5 gives integer division (3). 2 + 3 = 5."
+            },
+            {
+                id: 18, section: 'sec-2',
+                q: "What will be printed by this factor level check?",
+                code: "f <- factor(c('Low', 'High', 'Medium', 'Low'))\nnlevels(f)",
+                options: [
+                    "[1] 4",
+                    "[1] 3",
+                    "[1] 'Low' 'High' 'Medium'",
+                    "[1] 2"
+                ],
+                ans: 1,
+                exp: "Although the vector has 4 elements, there are only 3 unique categories ('High', 'Low', 'Medium'), so nlevels(f) is 3."
+            },
+            {
+                id: 19, section: 'sec-2',
+                q: "What does this data frame row/column extraction return?",
+                code: "df <- data.frame(a = 1:3, b = c('x', 'y', 'z'))\nnrow(df[df$a >= 2, ])",
+                options: [
+                    "[1] 1",
+                    "[1] 2",
+                    "[1] 3",
+                    "[1] 0"
+                ],
+                ans: 1,
+                exp: "Rows where a >= 2 are rows 2 and 3. Therefore, nrow() returns 2."
+            },
+            {
+                id: 20, section: 'sec-2',
+                q: "Determine the output of this custom R function:",
+                code: "calc <- function(x, y = 3) {\n  return(x * y + 1)\n}\ncalc(4)",
+                options: [
+                    "[1] 5",
+                    "[1] 13",
+                    "Error: argument 'y' is missing",
+                    "[1] 12"
+                ],
+                ans: 1,
+                exp: "y defaults to 3 when omitted. Thus calc(4) evaluates 4 * 3 + 1 = 13."
+            },
+
+            // EXERCISE 3: APPLIED DATA SCIENCE & PROBLEM SOLVING (Questions 21 - 30)
+            {
+                id: 21, section: 'sec-3',
+                q: "You need to calculate the average salary for each department in a data frame `emp` (`Salary` and `Dept`). Which base R function is best suited for this?",
+                code: null,
+                options: [
+                    "tapply(emp$Salary, emp$Dept, mean)",
+                    "lapply(emp$Salary, emp$Dept, mean)",
+                    "table(emp$Salary, emp$Dept)",
+                    "cor(emp$Salary, emp$Dept)"
+                ],
+                ans: 0,
+                exp: "tapply() applies a function (mean) to subsets of a vector (Salary) broken down by a grouping factor (Dept)."
+            },
+            {
+                id: 22, section: 'sec-3',
+                q: "Which command correctly adds a new calculated column `BMI` to an existing data frame `patients`?",
+                code: null,
+                options: [
+                    "patients$BMI <- patients$Weight / (patients$Height ^ 2)",
+                    "add.col(patients, BMI = Weight / Height^2)",
+                    "patients[BMI] = Weight / Height^2",
+                    "cbind(patients$BMI, Weight / Height^2)"
+                ],
+                ans: 0,
+                exp: "Using the $ operator (df$new_col <- ...) is the standard base R way to append a new column to a data frame."
+            },
+            {
+                id: 23, section: 'sec-3',
+                q: "You want to visualize the relationship between two continuous numerical variables (`Advertising_Spend` and `Sales`). Which plot should you use?",
+                code: null,
+                options: [
+                    "barplot()",
+                    "pie()",
+                    "plot(Advertising_Spend, Sales)",
+                    "boxplot(Advertising_Spend)"
+                ],
+                ans: 2,
+                exp: "A scatter plot generated via plot(x, y) is the standard visualization for examining correlation/relationships between two continuous variables."
+            },
+            {
+                id: 24, section: 'sec-3',
+                q: "Which function returns the exact 5-number summary (Min, Q1, Median, Q3, Max) of a numeric vector without the mean?",
+                code: null,
+                options: ["summary(x)", "fivenum(x)", "quantile(x, 0.5)", "range(x)"],
+                ans: 1,
+                exp: "fivenum(x) returns Tukey's five-number summary (Min, Lower Hinge, Median, Upper Hinge, Max), whereas summary() also includes the Mean."
+            },
+            {
+                id: 25, section: 'sec-3',
+                q: "How do you identify which positions (indices) in a vector `x` contain missing values (NA)?",
+                code: null,
+                options: ["find.na(x)", "which(is.na(x))", "x == NA", "na.omit(x)"],
+                ans: 1,
+                exp: "is.na(x) returns a logical vector, and wrapping it in which() returns the exact integer indices where TRUE occurs."
+            },
+            {
+                id: 26, section: 'sec-3',
+                q: "In a boxplot, a data point is typically plotted as an individual outlier dot if it falls beyond which threshold?",
+                code: null,
+                options: [
+                    "1.0 * IQR from the median",
+                    "1.5 * IQR below Q1 or above Q3",
+                    "2.0 * Standard Deviations from the mean",
+                    "Outside the 10th and 90th percentiles"
+                ],
+                ans: 1,
+                exp: "Standard boxplots define whiskers up to 1.5 * IQR from Q1 and Q3; any observation beyond those fences is flagged as an outlier."
+            },
+            {
+                id: 27, section: 'sec-3',
+                q: "Which R command computes the sample variance and sample standard deviation of a vector `x`?",
+                code: null,
+                options: [
+                    "variance(x) and std(x)",
+                    "var(x) and sd(x)",
+                    "Var(x) and SD(x)",
+                    "spread(x) and dev(x)"
+                ],
+                ans: 1,
+                exp: "R uses lowercase var(x) for sample variance (denominator n-1) and sd(x) for sample standard deviation."
+            },
+            {
+                id: 28, section: 'sec-3',
+                q: "How do you sort a data frame `df` in ascending order based on the column `Age`?",
+                code: null,
+                options: [
+                    "sort(df, df$Age)",
+                    "df[order(df$Age), ]",
+                    "order(df, Age)",
+                    "df[, sort(df$Age)]"
+                ],
+                ans: 1,
+                exp: "order(df$Age) returns the row indices sorted by Age, which are then used to reorder the rows of df via df[order(...), ]."
+            },
+            {
+                id: 29, section: 'sec-3',
+                q: "Which function converts a frequency table `tbl` into relative frequencies (proportions summing to 1)?",
+                code: null,
+                options: ["rel.table(tbl)", "prop.table(tbl)", "percent(tbl)", "norm.table(tbl)"],
+                ans: 1,
+                exp: "prop.table(tbl) divides each cell count by the grand total (or margin total) to yield proportions."
+            },
+            {
+                id: 30, section: 'sec-3',
+                q: "What is the most appropriate chart to display the frequency distribution of a single continuous numeric variable (e.g., Exam Scores)?",
+                code: null,
+                options: ["hist()", "barplot()", "pie()", "dotchart()"],
+                ans: 0,
+                exp: "A histogram (hist()) bins continuous numerical data into intervals to show its underlying distribution shape and skewness."
+            }
+        ];
+
+        const sectionMeta = {
+            'sec-1': {
+                title: "Exercise 1: Multiple Choice Questions (Theory & Fundamentals)",
+                desc: "Select the best answer for each question covering R syntax, data structures, and descriptive statistics theory."
+            },
+            'sec-2': {
+                title: "Exercise 2: Code-to-Output Analysis",
+                desc: "Read each R code snippet carefully and determine the exact console output."
+            },
+            'sec-3': {
+                title: "Exercise 3: Applied Data Science & Problem Solving",
+                desc: "Apply R programming concepts to data manipulation, missing data handling, and statistical visualization."
+            }
+        };
+
+        let isSubmitted = false;
+
+        function renderQuestions() {
+            examData.forEach(item => {
+                const container = document.getElementById(`questions-${item.section}`);
+                if (!container) return;
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${item.id}`;
+
+                let codeHtml = item.code 
+                    ? `<pre class="code-block"><code>${item.code.replace(/\\n/g, '\n')}</code></pre>` 
+                    : '';
+
+                let optionsHtml = item.options.map((opt, idx) => `
+                    <label class="option-label" id="opt-${item.id}-${idx}">
+                        <input type="radio" name="q${item.id}" value="${idx}" onchange="updateProgress()">
+                        <span class="option-marker">${String.fromCharCode(65 + idx)}</span>
+                        <span class="option-text">${opt}</span>
+                    </label>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-badge">Question ${item.id}</span>
+                        <span class="q-status" id="status-${item.id}"></span>
+                    </div>
+                    <p class="q-title">${item.q}</p>
+                    ${codeHtml}
+                    <div class="options-list">
+                        ${optionsHtml}
+                    </div>
+                    <div class="explanation-box hidden" id="exp-${item.id}">
+                        <strong>Explanation:</strong> ${item.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function switchSection(secId) {
+            document.querySelectorAll('.exam-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(secId).classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.target === secId);
+            });
+
+            document.getElementById('section-title').textContent = sectionMeta[secId].title;
+            document.getElementById('section-desc').textContent = sectionMeta[secId].desc;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            let answered = 0;
+            examData.forEach(item => {
+                if (document.querySelector(`input[name="q${item.id}"]:checked`)) {
+                    answered++;
+                }
+            });
+            document.getElementById('answered-count').textContent = `${answered} / ${examData.length}`;
+        }
+
+        function submitExam() {
+            if (isSubmitted) return;
+            isSubmitted = true;
+            let score = 0;
+
+            examData.forEach(item => {
+                const selected = document.querySelector(`input[name="q${item.id}"]:checked`);
+                const card = document.getElementById(`q-card-${item.id}`);
+                const status = document.getElementById(`status-${item.id}`);
+                const expBox = document.getElementById(`exp-${item.id}`);
+                const correctLabel = document.getElementById(`opt-${item.id}-${item.ans}`);
+
+                // Disable inputs
+                document.querySelectorAll(`input[name="q${item.id}"]`).forEach(inp => inp.disabled = true);
+
+                correctLabel.classList.add('correct-answer');
+                expBox.classList.remove('hidden');
+
+                if (selected && parseInt(selected.value) === item.ans) {
+                    score++;
+                    card.classList.add('card-correct');
+                    status.textContent = "Correct ✓";
+                    status.className = "q-status status-pass";
+                } else {
+                    card.classList.add('card-incorrect');
+                    status.textContent = selected ? "Incorrect ✗" : "Unanswered";
+                    status.className = "q-status status-fail";
+                    if (selected) {
+                        document.getElementById(`opt-${item.id}-${selected.value}`).classList.add('wrong-answer');
+                    }
+                }
+            });
+
+            const badge = document.getElementById('final-score-badge');
+            const pct = Math.round((score / examData.length) * 100);
+            document.getElementById('score-text').textContent = `${score} / ${examData.length} (${pct}%)`;
+            badge.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetExam() {
+            isSubmitted = false;
+            document.getElementById('exam-form').reset();
+            document.getElementById('final-score-badge').classList.add('hidden');
+            document.getElementById('answered-count').textContent = `0 / ${examData.length}`;
+
+            examData.forEach(item => {
+                const card = document.getElementById(`q-card-${item.id}`);
+                card.classList.remove('card-correct', 'card-incorrect');
+                document.getElementById(`status-${item.id}`).textContent = '';
+                document.getElementById(`exp-${item.id}`).classList.add('hidden');
+
+                document.querySelectorAll(`input[name="q${item.id}"]`).forEach(inp => inp.disabled = false);
+                item.options.forEach((_, idx) => {
+                    const lbl = document.getElementById(`opt-${item.id}-${idx}`);
+                    lbl.classList.remove('correct-answer', 'wrong-answer');
+                });
+            });
+            switchSection('sec-1');
+        }
+
+        // Initialize on load
+        renderQuestions();
+    </script>
+</body>
+</html>
